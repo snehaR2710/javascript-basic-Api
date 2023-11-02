@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+           body{
+            background-color: rgb(100, 70, 145);
+           }
+           #form{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+            margin-top: 50px;
+           }
+           .feild{
+            font-size: 20px;
+            color: #000;
+            padding: 10px 5px;
+            border-radius: 8px;
+           }
+           .btn{
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+           }
+           div .post{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            font-size: 30px;
+           }
+    </style>
+</head>
+<body>
+    <form id="form" action="" method="post">
+        <input type="text" id="name" placeholder="Name" class="feild"></br>
+        <input type="text" id="body" placeholder="Body" class="feild"></br>
+        <input type="submit" value="Add" class="btn">
+    </form>
+    <div>
+        <h3 class="post" id="write"></h3>
+        <h4 id="title" class="post"></h4>
+        <h5 id="bd" class="post"></h5>
+    </div>
+
+
+    <script>
+        const form = document.getElementById("form")
+        const write = document.getElementById("write")
+
+        form.addEventListener("submit", (e)=> {
+            e.preventDefault()
+            let name = document.getElementById("name").value
+            let body = document.getElementById("body").value
+            write.innerText = "The following data is successfully Posted"
+
+            fetch("https://jsonplaceholder.typicode.com/posts", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: name,
+                    body: body,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+
+
+            title = document.getElementById("title");
+            bd = document.getElementById("bd");
+            
+            title.innerHTML = data.title;
+            bd.innerHTML = data.body;
+        }).catch((error) => console.log("Error:", error))
+    </script>
+</body>
+</html>
